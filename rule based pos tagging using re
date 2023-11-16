@@ -1,0 +1,30 @@
+import re
+
+# Define the POS patterns and their corresponding tags
+patterns = [
+    (r'\b(The|the)\b', 'DET'),  # Matches "The' or 'the' as determiners
+    (r'\b(cat|dog)\b', 'NOUN'),  # Matches 'cat' or 'dog' as nouns
+    (r'\b(is|am|are)\b', 'VERB'),  # Matches 'is,' 'am,' or 'are' as verbs
+    (r'\b(quickly|brightly)\b', 'ADV'),  # Matches 'quickly' or 'brightly' as adverbs
+    (r'\b(?:[A-Za-z]+)\b', 'NOUN')  # Matches any other words as nouns
+]
+
+def rule_based_pos_tagging(sentence):
+    tagged_sentence = []
+    for word, tag in patterns:
+        regex = re.compile(word)
+        matches = regex.findall(sentence)
+        for match in matches:
+            tagged_sentence.append((match, tag))
+    return tagged_sentence
+
+# Example sentence for POS tagging
+input_sentence = "The quick brown fox is running quickly."
+
+# Perform rule-based POS tagging on the input sentence
+tagged_words = rule_based_pos_tagging(input_sentence)
+
+# Display tagged words with their respective POS tags
+print("Rule-Based POS Tagging Result:")
+for word, tag in tagged_words:
+    print(f"{word}: {tag}")
