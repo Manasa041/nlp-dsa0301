@@ -1,0 +1,42 @@
+import nltk
+
+# Sample conversation
+conversation = [
+    "Hello! How are you today?",
+    "I'm doing well, thank you. How about you?",
+    "Can you please pass the salt?",
+    "Sure, here you go.",
+    "What time is the meeting tomorrow?",
+    "The meeting is at 2:00 PM."
+]
+
+# Tokenize each sentence in the conversation
+tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in conversation]
+
+# Perform part-of-speech tagging to identify speech tags
+tagged_sentences = [nltk.pos_tag(tokens) for tokens in tokenized_sentences]
+
+# Define dialog act patterns using regular expressions
+dialog_act_patterns = [
+    (r'^(?=.*\b(?:hello|hi)\b).*$', 'GREETING'),
+    (r'^.*\b(how|what)\b.*$', 'QUESTION'),
+    (r'^.*\b(thank you|thanks)\b.*$', 'THANKS'),
+    (r'^.*\b(can|could|please)\b.*$', 'REQUEST'),
+    (r'^.*\b(at|is|am|are|tomorrow|today|go)\b.*$', 'INFORMATION'),
+    (r'^.*\b(pass|here)\b.*$', 'OFFERING')
+]
+
+# Apply dialog act patterns to recognize dialog acts in each sentence
+recognized_dialog_acts = []
+
+for tagged_sentence in tagged_sentences:
+    for word, tag in tagged_sentence:
+        for pattern, dialog_act in dialog_act_patterns:
+            if nltk.re.match(pattern, word, flags=nltk.re.IGNORECASE):
+                recognized_dialog_acts.append((word, dialog_act))
+                break
+
+# Display recognized dialog acts
+print("Recognized Dialog Acts:")
+for word, dialog_act in recognized_dialog_acts:
+    print(f"'{word}' - {dialog_act}")
