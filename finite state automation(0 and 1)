@@ -1,0 +1,13 @@
+def fsa(string):
+    state=0
+    for char in string:
+        if char=='0':
+            state=(state+1)%2
+        elif char=='1':
+            state=(state-1)%2
+    return state==0
+strings_to_test=["0011","0101","000111","101010","1100","10101"]
+for s in strings_to_test:
+    result=fsa(s)
+    print(f"string'{s}' is accepeted:{result}")
+        
