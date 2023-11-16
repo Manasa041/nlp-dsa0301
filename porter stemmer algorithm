@@ -1,0 +1,28 @@
+import nltk
+from nltk.stem import PorterStemmer
+from nltk.tokenize import word_tokenize
+
+# Download the NLTK resources (if not downloaded)
+nltk.download('punkt')
+
+# Initialize the Porter Stemmer
+stemmer = PorterStemmer()
+
+# Sample sentences
+sentences = [
+    "Coding with Python is very enjoyable.",
+    "I had a delicious meal at the restaurant."
+]
+
+# Perform word stemming on each sentence
+for sentence in sentences:
+    # Tokenize the sentence into words
+    words = word_tokenize(sentence)
+    
+    # Apply stemming to each word in the sentence
+    stemmed_words = [stemmer.stem(word) for word in words]
+    
+    # Print the original sentence and stemmed words
+    print("Original Sentence:", sentence)
+    print("Stemmed Sentence:", ' '.join(stemmed_words))
+    print()
