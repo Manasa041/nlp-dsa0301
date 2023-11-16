@@ -1,0 +1,6 @@
+import spacy
+nlp=spacy.load("en_core_web_sm")
+text="Barack obama was the 44th president of the united states, and he was born in Hanolulu,Hawaii."
+doc=nlp(text)
+for ent in doc.ents:
+    print(f"Entity:{ent.text},Label:{ent.label_}")
