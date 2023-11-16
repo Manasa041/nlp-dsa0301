@@ -1,0 +1,28 @@
+import wikipediaapi
+import re
+import requests
+def disambiguate_entities(sentence):
+    user_agent = "Your-User-Agent-Name/1.0 (your@email.com)"
+    entity_mentions = re.findall(r'\b\w+\b', sentence)
+    resolved_entities = {}
+    for mention in entity_mentions:
+        headers = {'User-Agent': user_agent}
+        url = f'https://en.wikipedia.org/wiki/{mention}'
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            resolved_entities[mention] = response.url.split('/')[-1]
+        else:
+            resolved_entities[mention] = None
+    return resolved_entities
+sentence1 = "Apple is a leading tech company."
+sentence2 = "I love apples is a fruit."
+sentence3 = "Python is a popular programming language."
+sentence4 = "The python is a non-venemous snake."
+result1 = disambiguate_entities(sentence1)
+print("Entities in sentence 1:", result1)
+result2 = disambiguate_entities(sentence2)
+print("Entities in sentence 2:", result2)
+result3 = disambiguate_entities(sentence3)
+print("Entities in sentence 3:", result3)
+result4 = disambiguate_entities(sentence4)
+print("Entities in sentence 4:", result4)
