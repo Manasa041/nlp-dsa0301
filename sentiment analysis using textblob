@@ -1,0 +1,22 @@
+from textblob import TextBlob
+
+# Sentences to analyze
+sentences = [
+    "I love this product! It's amazing.",
+    "The weather is terrible today."
+]
+
+for sentence in sentences:
+    analysis = TextBlob(sentence)
+    sentiment = analysis.sentiment.polarity
+
+    # Classify sentiment based on polarity
+    if sentiment > 0:
+        print(f'Sentence: "{sentence}"')
+        print("Sentiment: Positive")
+    elif sentiment < 0:
+        print(f'Sentence: "{sentence}"')
+        print("Sentiment: Negative")
+    else:
+        print(f'Sentence: "{sentence}"')
+        print("Sentiment: Neutral")
