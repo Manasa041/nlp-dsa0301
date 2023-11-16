@@ -1,0 +1,40 @@
+import nltk
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
+from collections import defaultdict
+
+# Text to summarize
+input_text = (
+    "The World Health Organization (WHO) plays a vital role in global health. "
+    "WHO is headquartered in Geneva, Switzerland, and it is responsible for "
+    "coordinating international efforts to control and prevent the spread of diseases. "
+    "Its mission is to promote and protect the health of people worldwide."
+)
+
+# Tokenize text into sentences and words
+sentences = sent_tokenize(input_text)
+words = word_tokenize(input_text.lower())
+
+# Remove stopwords and punctuation
+stop_words = set(stopwords.words("english"))
+filtered_words = [word for word in words if word.isalnum() and word not in stop_words]
+
+# Calculate word frequency
+word_freq = defaultdict(int)
+for word in filtered_words:
+    word_freq[word] += 1
+
+# Calculate sentence scores based on word frequency
+sentence_scores = defaultdict(int)
+for sentence in sentences:
+    for word in word_tokenize(sentence.lower()):
+        if word in word_freq:
+            sentence_scores[sentence] += word_freq[word]
+
+# Sort sentences by scores and generate summary
+sorted_sentences = sorted(sentence_scores, key=sentence_scores.get, reverse=True)
+summary_length = min(2, len(sorted_sentences))  # Adjust summary length as needed
+
+summary = ' '.join(sorted_sentences[:summary_length])
+print("Extractive Summary:")
+print(summary)
