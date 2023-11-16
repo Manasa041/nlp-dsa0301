@@ -1,0 +1,18 @@
+import spacy
+
+# Load the English language model in spacy
+nlp = spacy.load("en_core_web_sm")
+
+# Given sentence
+input_sentence = "The capital of France is Paris, and it's known for the Eiffel Tower."
+
+# Perform Named Entity Recognition (NER)
+doc = nlp(input_sentence)
+
+# Extract named entities and their respective labels
+named_entities = [(entity.text, entity.label_) for entity in doc.ents]
+
+# Display named entities and their labels
+print("Named Entities:")
+for entity, label in named_entities:
+    print(f"{entity}: {label}")
