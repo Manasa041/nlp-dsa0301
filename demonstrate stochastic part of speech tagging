@@ -1,0 +1,29 @@
+import nltk
+import random
+
+# Sentences to tag
+sentences = [
+    "The red car stopped at the traffic light.",
+    "She quickly ran to catch the bus."
+]
+
+# Tokenize the sentences
+tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+
+# Create a list of tagged words using a stochastic POS tagger (randomly assigning POS tags)
+def stochastic_pos_tag(sentence_tokens):
+    tagged_sentence = []
+    pos_tags = ['NN', 'VB', 'JJ', 'RB', 'IN', 'DT']  # Sample POS tags (Noun, Verb, Adjective, Adverb, Preposition, Determiner)
+
+    for token in sentence_tokens:
+        random_tag = random.choice(pos_tags)  # Randomly assign a POS tag
+        tagged_sentence.append((token, random_tag))
+
+    return tagged_sentence
+
+# Tag each sentence with stochastic POS tagging
+for i, sentence_tokens in enumerate(tokenized_sentences):
+    tagged_sentence = stochastic_pos_tag(sentence_tokens)
+    print(f"Sentence {i + 1} (Stochastic POS tagging):")
+    print(tagged_sentence)
+    print()
