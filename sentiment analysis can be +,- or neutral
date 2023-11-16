@@ -1,0 +1,22 @@
+from textblob import TextBlob
+
+# Text data for sentiment analysis
+text_data = "I love this product! It's amazing."
+
+# Perform sentiment analysis using TextBlob
+analysis = TextBlob(text_data)
+
+# Get the polarity score (ranges from -1 to 1 where < 0 indicates negative, > 0 indicates positive, and 0 is neutral)
+polarity_score = analysis.sentiment.polarity
+
+# Interpret the polarity score
+if polarity_score > 0:
+    sentiment = "Positive"
+elif polarity_score < 0:
+    sentiment = "Negative"
+else:
+    sentiment = "Neutral"
+
+# Print the sentiment analysis result
+print(f"Text: {text_data}")
+print(f"Sentiment: {sentiment} (Polarity Score: {polarity_score})")
