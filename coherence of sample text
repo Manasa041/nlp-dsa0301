@@ -1,0 +1,19 @@
+import spacy
+def calculate_coherence(text):
+    nlp = spacy.load("en_core_web_sm")
+    doc = nlp(text)
+    sentence_roots = [(sent, sent.root) for sent in doc.sents]
+    coherence_score = 2.0
+    for i in range(len(sentence_roots) - 1):
+        root1 = sentence_roots[i][1].lemma_
+        root2 = sentence_roots[i + 1][1].lemma_
+        similarity = 1.0 if root1 == root2 else 0.0
+        coherence_score += similarity
+    coherence_score /= max(len(sentence_roots) - 1, 1)
+    return coherence_score
+sample_text = """
+Once upon a time, there was a young boy named Peter.
+He lived in a small village.
+One day, he decided to explore the nearby forest."""
+coherence_score = calculate_coherence(sample_text)
+print(f"Coherence score for the sample text: {coherence_score:.2f}")
