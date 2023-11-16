@@ -1,0 +1,27 @@
+import nltk
+
+# Download NLTK resources if not already downloaded
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('maxent_ne_chunker')
+nltk.download('words')
+
+# Function to perform named entity recognition (NER)
+def extract_named_entities(text):
+    sentences = nltk.sent_tokenize(text)
+    tokenized_sentences = [nltk.word_tokenize(sentence) for sentence in sentences]
+    tagged_sentences = [nltk.pos_tag(sentence) for sentence in tokenized_sentences]
+    named_entities = nltk.ne_chunk_sents(tagged_sentences, binary=False)
+
+    # Extract named entities
+    for entities in named_entities:
+        for entity in entities:
+            if isinstance(entity, nltk.tree.Tree):
+                print(f"Named Entity: {' '.join([word[0] for word in entity])} - Type: {entity.label()}")
+
+# Given text
+given_text = "Harvard University, located in Cambridge, Massachusetts, is a prestigious institution."
+
+# Extract named entities from the text
+print("Named Entities:")
+extract_named_entities(given_text)
